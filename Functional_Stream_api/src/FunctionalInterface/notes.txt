@@ -1,0 +1,128 @@
+🔹 1️⃣ Predicate<T>
+
+👉 Used for checking condition
+👉 Takes input → Returns boolean
+
+Method:
+boolean test(T t);
+Example:
+Predicate<Integer> p = n -> n > 10;
+
+System.out.println(p.test(15)); // true
+
+✅ Mostly used in filtering (Streams)
+
+🔹 2️⃣ Function<T, R>
+
+👉 Used for transforming data
+👉 Takes input → Returns output
+
+Method:
+R apply(T t);
+Example:
+Function<Integer, String> f = n -> "Value: " + n;
+
+System.out.println(f.apply(5)); // Value: 5
+
+✅ Used in mapping
+
+🔹 3️⃣ Consumer<T>
+
+👉 Used for performing action
+👉 Takes input → Returns nothing
+
+Method:
+void accept(T t);
+Example:
+Consumer<String> c = s -> System.out.println(s);
+
+c.accept("Hello");
+
+✅ Used in forEach()
+
+🔹 4️⃣ Supplier<T>
+
+👉 Used for providing data
+👉 Takes no input → Returns value
+
+Method:
+T get();
+Example:
+Supplier<Double> s = () -> Math.random();
+
+System.out.println(s.get());
+
+✅ Used for generating values
+
+🔹 5️⃣ Runnable
+
+👉 No input → No return
+👉 Used for threads
+
+Method:
+void run();
+Example:
+Runnable r = () -> System.out.println("Thread running");
+new Thread(r).start();
+🔹 6️⃣ Comparable<T>
+
+👉 Used for natural sorting
+👉 Implemented inside class
+
+Method:
+int compareTo(T o);
+
+Example:
+
+class Student implements Comparable<Student> {
+    int marks;
+
+    public int compareTo(Student s) {
+        return this.marks - s.marks;
+    }
+}
+
+✅ Sorting based on single logic
+
+🔹 7️⃣ Comparator<T>
+
+👉 Used for custom sorting
+👉 Defined outside class
+
+Method:
+int compare(T o1, T o2);
+
+Example:
+
+Comparator<Integer> comp = (a, b) -> a - b;
+
+✅ Multiple sorting logics possible
+
+🔥 Quick Comparison Table
+Interface	Input	Output	Use
+Predicate	1	boolean	Condition checking
+Function	1	1 value	Transform data
+Consumer	1	void	Perform action
+Supplier	0	1 value	Provide value
+Runnable	0	void	Thread
+Comparable	1 object	int	Natural sorting
+Comparator	2 objects	int	Custom sorting
+🔥 Very Important Interview Line
+
+Predicate → test
+
+Function → apply
+
+Consumer → accept
+
+Supplier → get
+
+Runnable → run
+
+Comparable → compareTo
+
+Comparator → compare
+
+🔥 Final Short Viva Answer
+
+Predicate checks condition, Function transforms data, Consumer performs action, Supplier provides data, Runnable is used for threads, Comparable defines natural sorting inside class, and Comparator defines custom sorting outside the class.
