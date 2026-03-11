@@ -1,0 +1,19 @@
+package analytics;
+
+//package com.analytics;//
+
+import java.util.List;
+
+public interface ActionAnalytics {
+
+    void recordAction(ActionType action);
+
+    void processNextBatch();
+
+    int getTotalProcessedCount();
+
+    int getPendingActionCount();
+
+    List<ActionType> getMostFrequentActions();
+}
+
