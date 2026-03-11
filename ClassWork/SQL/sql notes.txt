@@ -1,0 +1,862 @@
+display salary of employee without duplicates 
+
+
+Distinct 
+
+- It is used to remove the duplicates values from the result table 
+Distinct should be first argument  
+display empno , sal without duplicates
+
+we can also write multiple columns in distinct , it removes combination of column in which 
+-------------------------------------------------------------------------------------------------------------------
+Expression :
+------------
+
+--display salary of emp  with bonus of thousand rupee??
+
+ Ans - select ename , sal , sal+1000 from emp;
+
+if it is deduction of thousand; 
+
+--display employee name , salary and anuual salary ?
+
+select ename , sal  , sal*12  as annual_salary from emp;
+
+--display ename,sal with hike of 10%?
+
+select ename , sal , sal+(sal*10)/100 as hiked_sal from emp;
+---------------------------------------------------------------------------------------------------------------------
+Alias : 
+
+-> Alias is a alternate name given to then column or expression in the result table .
+-> alias name can be given with or without as keyword 
+-> alias name should be the single string which is separated by  underscore or enclosed within " "
+
+select sal as salary , comm as commission  from emp ; ( it will not change the original table ) ;
+
+ex - 
+select sal as " Monthly salary ", sal*12 as " Annual_salary " from emp ;
+
+
+que 1 > 
+
+with monthly hike of 50 % 
+
+select ename , sal, sal*50/100 as "monthly hike" from emp ;
+
+name and salary with a  annual dedcutioon of 10 percent 
+select ename , sal*12 as "yearly_Sal" , sal*12-(sal*12*10)/100 as " deduction " from emp ;
+
+show total salary given to each employee 
+
+ select ename, sal , sal+nvl(comm,0) as " total  sal  "  from emp;( when there is no commission it's comm value will be null so we need to replace it with 0 ;
+
+--> all details along with annual salary of employee; 
+ select emp.* ,sal*12 from emp;( oracle)( two * will throw an error that's why we use emp.*) 
+
+name and designation along with 100 penalty ; 
+
+
+------------------------------------------------------------------------------------------------------------------
+
+Data Query Language 
+----------------------
+
+select  : 
+projection : 
+selection : 
+joins : 
+
+--------------------------
+
+selection : 
+
+------------
+
+syntax : 
+	select */[Distinct] col_name/expression[alias]
+	from table_name
+	where <filter_condition >;
+
+order of execution : 
+
+1) from clause ( because at first we need a table to perform any action that's why we use from first)
+2) where clause ( because we will filter acc to condition first then we will excute select as we all know if we want name of person > 18 age we will first filter person with 18 years of age then we will find name )
+--> where clause excutes row by row 
+que - 
+
+
+Q - waq to display emname , dept_no of employess workinh in dept no 20;
+select ename, deptno
+ from emp
+ where deptno=20;
+
+order of execution 
+
+the table is selected first
+after that the where clause filters (it checks row by row with each row values and return true or false 
+
+  7369 SMITH                                     CLERK                                                    7902 17-DEC-80        800                    20  so check 20       9600
+      7499 ALLEN                                 SALESMAN                                                 7698 20-FEB-81       1600        300         30      19200
+      7521 WARD                                   SALESMAN                                                 7698 22-FEB-81       1250        500         30
+
+
+Q2 dis name and sal of emp who are earning more than 2000;\
+
+select ename, sal from emp where sal >2000;
+
+Q3 dis the details of the emp who are working as manager
+
+select emp.* from emp where job ='manager';
+
+ANS - 	SQL> select emp.* from emp where job ='manager';
+
+	SQL> select emp.* from emp where job ='manager';
+
+	no rows selected
+
+	SQL> select * from emp where job ='manager';
+
+	no rows selected
+
+	SQL> select * from emp where job ='MANAGER';
+	
+	(Note - sql is not case sensitive but values are case sensitive ) ;
+
+
+Q 4 display name and hire date of employee  who are hired after 1981 
+
+select ename , hiredate
+ from emp
+ where hiredate >'31-dec-1981';
+
+Q 5 waq to display name sal annual salary of enployye if anuual sal is more than 12000
+select ename , sal , sal*12 as "anuual_salary "  from emp where anuual_salary >12000;( will give an error because alias name doesn't in the rror 
+
+SQL> select ename , sal , sal*12 as "anuual_salary "  from emp where sal*12>12000;
+
+--------------------------------------------------------------------------
+
+
+OPERATORS 
+
+------------------
+
+1) Arithmetic operators :- ( +,-,*,/,%)
+2) concatenation operators :-(||)
+3) comparison operator : -( = , != or <> , or <> ){ <> also means not equal too ) 
+4) relational operator : - (>,<,>=,<=) 
+5) logical operator ( and , or , not 
+6) special operator ( in , not in , between , is , is not , like , not like ) 
+
+7) subquery operator (  all, any , exists , not exists )
+8) set operator  - union, union all ,intersect , minus 
+
+
+Concatenation 
+
+|| Is used in oracle  concat('string1','string2') also used 
+concat() is used in MySQL 
+
+syntax : concat('string1','string2')
+
+"smith" + 100 = smith100( but will give error in sql )
+"smith " || 100 = smith100 
+
+so waq to adding mr in every name 
+ SQL> select 'Mr.'||ename from emp ;
+
+Q 2  waq to concat name and sal from emp 
+
+ans - 	select ename||'  '||sal from emp ;
+
+Q3 - print -- smith is working as clerk as clerk and earning salary of 800
+
+	 ans =   SELECT ename || ' is working as ' || job || 
+       ' and earning salary of ' || sal AS details
+       FROM emp
+        WHERE UPPER(ename) = 'SMITH';
+	this will only work in oracle 
+
+	
+      SELECT CONCAT(ename, ' is working as ', job, 
+              ' and earning salary of ', sal) AS details
+     FROM emp
+       WHERE ename = 'SMITH';
+
+	this will work in MySQL 
+
+Logical operator 
+ Q 1 display the detail of emp working in deptno 20  and earning salary more than 2000
+
+select * from emp 
+where deptno=20 and  sal>2000;
+
+
+Q 2 display name and dept no of emp employee who are working in deptno 10 or 20 ;
+select ename , deptno from emp where deptno =10 or deptno =20;
+
+SELECT ename, deptno
+FROM emp
+WHERE deptno IN (10, 20);
+
+
+display the details of employee who are earning more than 2k in deptno 10,20 
+
+select * from emp where (deptno =10 or deptno = 20 )and sal >2000;
+
+Q  display details of employee who are not working as salesman and analyst 
+
+	 select * from emp where job != 'SALESMAN' AND job!='ANALYST';
+	select * from emp where not job='SALESMAN' AND NOT job = 'ANALYST';
+	
+in operator 
+
+	 DISPLAY NAME AND DEpt no of emp working in 10 ,20 
+
+	SELECT ENAME , DEPTNO 
+	FROM EMP 
+	WHERE DEPTNO IN (10,20);
+
+NOT IN 
+
+	DISPLAY NAME AND DEpt no of emp WHO ARE NOT  working in 10 ,20 
+
+	select enamae , deptno 
+	from emp 
+ 	where dept not in (10,20);
+
+ 
+
+between 
+ it is used whenever there is a range of value  [range is called starting values and ending values ]
+
+it will also include range values 
+
+Syntax : col_name/exp between lower_values nd higher value ; 
+
+we cannot interchange range values ;
+
+Q1 display name and salary of employee who are earning salary in the range of thousand to three thousand 
+
+	select ename , sal from emp where sal between 1000 and 3000;
+
+Q2 display the details of the employee who are hired in the year of 1981
+
+	select * from emp where hiredate between '01-jan-1981' and '31-dec-1981';
+
+not between 
+
+->similar to between operator but It will reject 	
+Syntax : col_name/exp between lower_values nd higher value ; 
+
+Q1 display the details of employee who are not earning salary in the range of thousand to three thousand  
+	
+	select ename , sal from emp where sal  not between 1000 and 3000;
+	select ename , sal from emp where sal <1000 or sal > 3000;
+
+
+----------------------------------------------------------------------------
+
+is : it is used tio opmapre with null values 
+
+
+Q display details of employee who are not earning commission 
+
+select * from emp  where comm is null;
+
+is not : it is used to compare with not null values; 
+
+Q emp earning commission of 400
+
+select * 
+from emp 
+where comm is not null;
+
+Q display details of employee who are earning salary but not comm 
+
+select * from emp where  salary is not null and comm is null;
+
+
+
+like operator 
+
+it is used for patter matching  
+	or
+ it is used whenever the given data is incomplete 
+
+to achieve pattern matching we use % and underscore 
+
+details of emp whose names start with 's' so it is incomplete data 
+
+		% -> it accepts more than 1 char 
+		_ -> it accepts single character 
+
+syntax  -  
+		Col_name/Exp LIKE 'pattern_matching';
+
+Q display name of employee whose names start with s ;
+
+select ename from emp where ename like 'S%';
+
+if ending with s 
+
+	Ename like '%S'
+
+Q display names of employee  whose names consist of char 'A';
+
+select ename from emp where ename like'%A%';
+
+Q display details of employee whose names consist of char a two times 
+
+	select * from emp where ename like '%A%A%;
+	Consecutive a 
+		select * from emp where ename like '%AA%;
+	exactly two a 
+	select * from emp where ename like '%A%A%' and  ename not like '%A%A%A%';
+
+Q display name and salary of emp  who are earning 4 digit of salary ;
+	
+	select * from emp where sal like '____';
+	select * from emp where sal between 999 and 9999;
+
+Q display details of emp who are hired in the month of feb 
+
+
+	select * from emp where hiredate like '__-FEB-__';
+         select * from emp where hiredate like '%FEB%';
+
+
+not like 
+
+it is similar to like operator but it will reject 
+
+Q emp name which doesn't start with s ; 
+
+	select ename from emp where enname note like 's%'
+Q emp name whose name start with a or s 
+
+	select ename from emp where ename  like 'A%' or ename like 'S%';
+
+Q emp name whose names start with vowels 
+	select ename from emp where ename  like 'A%' or ename like 'E% or like 'I%' or ename like 'O%' or ename like 'U%';
+Q display the details whose names start with consonant and end with vowels 
+
+	select ename 
+	from emp 
+	where( 
+	ename not like  'E%' 
+	or ename not like 'A%' 
+	or ename not  like 'I%' 
+	or ename not  like 'O%' 
+	or ename not like 'U%') 
+	and
+	( ename like '%A' 
+	or ename like '%E'
+	 or ename like '%I' 
+	or ename like '%O' 
+	or ename like '%U' );
+	
+
+
+Q List All the emploees who are having reporting managers in dept 10 
+Q list all the employees whose commision is null and working as clerk 
+Q li al th em who don't have a reproting manager in deptno 10 or 30 
+Q waqtd details of the employee who's name starts with 'j' and end with 's';
+6. WAQTD details of the employee who's name has 5 characters'
+7. WAQTD name and hiredate of the employee who was hired on the first day of the month in the year 1982
+8 WAQTD name of the employee which has 6 characters, starts with 'A' and ends with 'A'
+9. WAQTD name and job of the employee if the job has a string 'MAN' in it.
+10. MAQTO NAMES OF THE EMPLOYEES HAVING CHAR 'S' AS THEIR LAST CHARACTER
+11. WAQTD DETAILS OF THE EMPLOYEES WORKING AS ANALYST AND EARNING 4 DIGIT SALARY
+12. WAQTD NAMES OF THE EMPLOYEES HIRED IN THE FIRST MONTH.
+13. WAQTO DETAILS OF EMPLOYEES HAVING TWO L'S PRESENT IN THE NAMES AND WORKS AS MANAGER
+14. MAQTD NAMES OF THE EMPLOYEES IF NAME STARTS WITH 'A' OR 'J' OR 'S'
+15. LIST ALL THE EMPLOYEE NAMES EXCEPT FOR THE EMPLOYEES WHO'S NAME HAS 'A' AS THE 3rd CHARCTER; 
+
+
+
+Function 
+
+A set of inststruction  to perform any task 
+
+				FUNCTION 	
+				/       \ 
+				INBUILT  USER DEFINED ( IN SQL NO USER DEFINED ) 
+				/    \
+       	        		SRF  MRF 
+
+FUCNTION  which accepts single input  as an argument  is known as single row function is knowns as single row function
+it takes n number of input and returns n numbers of output 
+
+srf is also known as scalar function 
+
+
+major components of  functions 
+	1) function name 
+	2) number of arguments 
+	3) return type 
+
+
+Length : - 
+
+	it is used to count number of char in given string 
+								Syntax - Length(String) 
+display the name of emp whose names Is exactly 4 char 
+
+display the name of emp whose name is more than 4 char but less than 7 char 
+
+
+-----------------------------------------------------------------------------------------------------------
+
+2 Concat():
+----------------------------------
+3) Upper(): It is used to convert given string in to upper case
+	
+		Example : select upper('smith')
+
+4) lower(): it converts given string into lower case 
+
+		Example : select upper('smith')
+
+5) Substr(): It is used to extract a part of a String from the given orhinal String 
+
+		Substr('Original_string',Position,[Length])
+	---> if the length is not mentioned it will extract whole character 
+		-6 -5 - 4 - 3 -2 -1 
+		A   N  U   R   A  G 
+		1   2  3   4   5  6  
+	select 
+		substr('ANURAG',2,3) op/ N U R	
+		substr('ANURAG',5,1) op/  D
+		substr('ANURAG',5,4) op/  A G 
+		substr('ANURAG',2) op/ N U R A G
+
+
+		substr('ANURAG',-3,3) op/ R A G 
+		substr('ANURAG',-6) op/ A N U R A G 
+
+
+	extracting 1st char from all the column 
+
+	substr(Sname,1,1) 
+
+	substr (sname,3,1) - 3rd char 
+
+	substr (sname,-1,1) - last char 
+	substr (sname,-3,1) - last 3rd char 
+
+6) locate() : 
+		locate('a', 'malayalam');
+						--2 pos 
+		locate('a', 'malayalam');
+						--3 pos 
+		locate ('a','malayalam',3); 
+			becuase we have specified so it will start from 3 --4 pos
+		locate('n', 'malayalam');
+						-- 0 ( as n is not present )
+
+
+	 substr (gmail , position('@' in gmail)  ( in oracle we use instr)  ( substr (gmail , position('@' ))  
+
+	substr(gmail,1, position('@' in gmail)-1)
+
+
+
+7) round()
+8) Ceil ()
+9 floor() 
+
+
+-----------------------------------------
+
+select current_date;     display today's date
+select now() 			display today's date and time with timezone
+select current_ timestamp: display today's date time with timezone 
+
+
+
+postrege sql 
+
+		to_char(): 
+				
+
+
+select extract(year from now())
+select extract(month from now())
+select extract(day from now())
+select extract(hour from now())
+	
+-------------- retrieve all emp who hired in Friday ??
+
+-		to_char -------------it converts date into formate models 
+
+
+		day - Monday 
+		dy - mon
+		d-16
+		d-1
+
+	Month 
+		month - December 
+		mon - Dec 
+		mn - 12
+	year 
+		yyyy - 2026
+		yy - 26
+		
+	hh12 - hours 
+	hh24 - hours 
+	mi - 39 
+	ss - 39 seconds 
+	
+retrieve all the employee hired of driday  
+
+	select emp.* , to_char(Hiredate,'dy') as day 
+	from emp 
+	where to_Char(Hiredate,'dy')='fri'
+
+
+	select emp.* , to_char(Hiredate,'mn') as mon
+	from emp 
+	where to_Char(Hiredate,'mn')=12
+
+
+		select emp.* , to_char(Hiredate,'yyyy') as year
+	       from emp 
+	     where to_Char(Hiredate,'yyyy')=12
+				
+
+		
+Q display the details of the employee who hired in the month of march April may 
+
+		select emp.*,to_char(Hiredate,'mon') as mon 
+		from emp 
+		where to_Char(Hiredate,'mon')='mar' or  to_Char(Hiredate,'mon') = 'apr' or  to_Char(Hiredate,'mon')='may'
+
+Q display the details of the employee in year 1981  in the month of feb April dec 
+
+		select emp.*,to_char(Hiredate,'mon') as mon , tochar(Hiredate,'yyyy') as year 
+		from emp 
+		where to_Char(Hiredate,'mon')='feb' or  to_Char(Hiredate,'mon') = 'apr' or  to_Char(Hiredate,'mon')='dec' and  to_Char(Hiredate,'yyyy') = 1981;
+
+
+              select emp.*,to_char(Hiredate,'mon') as mon , to_char(Hiredate,'yyyy') as year 
+		from emp 
+		where to_Char(Hiredate,'mon')in ('feb','apr','dec') and  to_Char(Hiredate,'yyyy') = 1981;
+
+
+---> 
+
+	recent dates thing 
+			like product manufactured in the 2 months 2 years 
+
+	select now() - interval '1 day';
+	select now() - interval '1 day';
+	select now() - interval '3 month';
+	select now() - interval '1 year';
+
+	select * from emp where Hiredate > CURRENT_DATE - interval '2' year;
+
+
+-- > finding experience 	
+
+psotre gl 
+	 AGE(date1,date2) 
+	 select age (current_date,'2025-01-01')
+
+	extracting year 
+	
+	extract ( year from age (current_date,'2025-01-01)
+
+Q retrieve the employee having 10 years of experience 
+		
+	select * 
+	from emp 
+	where extract ( year from age (current_date , hiredate))>=10 ;
+
+-----------------------------------------------------------------------------------------------------------------
+	coalesce() --- to replace the null with what we want ( as performing any operation on null will be null )
+
+	select ename,sal, comm , sal+coalesce(comm,0) as total_sal
+	from emp;
+	select coalesce(null,'apple','mango');
+
+
+		
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+Multi row function  - 
+
+function which accepts multiple inputs as an argument is known as multi row functions 
+it takes n number of inputs and give 1 single output 
+they are also known as group functions or aggregate functions 
+		
+	
+MAX() - maximum values present in the column 
+MIN() - it gives you minimum values present in column 
+SUM() - it gives you the sum of values 
+AVG() - it returns avg values present in the column 
+COUNT() - it returns number of values present in the column
+
+		imp rules of these functions 
+				1) always provide one argument 
+						max(sal,age) ( will give error)
+				2) along with multirow function we can't use any other column 
+						select ename ,max(sal) from emp ; ( will give error) 
+				3) We cannot write multirow function in where clause
+				4) multi row functions ignore null values 
+				5) count of is the only multirow function which will accept (*) as an argument 
+
+Q calculate total salary of the employee 
+
+select sum(sal) as salary from emp ;
+
+Q calculate the number of salaries in the table 
+
+	 select count(sal) from emp ;
+
+
+Q find emp name who is earning max sal 
+
+	select ename ,max(sal) from emp where sal>max(sal) ( error)
+
+
+Q display number of employee whose name consist of char a
+Q display  max sal, min salary and avg salary of all the employees working in dept 20
+Q display number of emp and total salary of all the employees who is earning more than 1700 
+		select count(*) , sum(sal) from emp where sal > 1700;(always use * or use column that has null values ) 
+			
+
+
+Functions : 
+----------
+		srf()                      mrf()
+
+		concat()                  max()
+		length()                  
+		substr()
+		position()/locate(0
+
+		round()
+		ceil()
+		floor()
+		extract 
+		interval 
+		to_char
+		age
+		coalesce 
+
+
+
+diff pk and fk 
+diff unique and pk 
+d/b char and varchar datatypes 
+explain all constraints 
+
+
+select : 
+	-- distinct 
+	--expression 
+	--alias 
+
+D/b unique constraints and distinct 
+
+-----------------------------------------------------------------
+group by ():
+
+		it is used to group the rows that have  same values in one or more columns 
+		the group by statement is used with aggregate functions 
+
+select group_function/group_by_exp
+from table 
+where <filter_condition>
+group by col_name/exp;
+
+
+Order of execution 
+-------------
+
+from clause 
+where clause [row-by-row]
+group by clause(row by row) 
+select clause [group-by -group]
+
+
+--Display no of employees in each dept ??
+
+	select count(ename) no_of_employees ,deptno 
+	from emp 
+	group by deptno;
+
+Q display no employee in each dept  if sal >2000
+
+	select count(*) no_OF_employee from emp where sal>2000 group by dept;
+
+Q display max salary given to an employee in each designation  
+  select max(sal)as maxsal ,job from emp group by job;
+
+Q display max  and min salary given to an employee in each designation  
+  select max(sal)as maxsal , min(sal) as minsal ,job from emp group by job;
+
+Q display number of times salaries are repeated in employee table 
+
+select count(*) no_of_sal ,sal from emp group by sal;
+
+Q display avg salary given to the employye in each job
+     
+     select avg(sal) as avg_Sal,job from emp group by job;
+Q display no of employee earning commission in each dept ? 
+
+	select count(comm),deptno from emp group by deptno;
+
+
+
+imp note 
+
+	group by clause is used to group the records
+	group by executes row-by-row
+	any clause executes after group by , it must execute group by group only
+	the col_name/exp used for grouping can also be used in select clause 
+	group by clause can be used without where clause 
+	we can also write multiple  column  in group by clause 
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+having clause 
+
+
+
+select group_function/group_by_exp
+from table 
+where <filter_condition>
+group by col_name/exp
+having <group_filter_condition>;
+
+
+Order of execution 
+-------------
+
+from clause 
+where clause [row-by-row]
+group by clause(row by row) 
+having [group-by-clause]
+select clause [group-by -group]
+
+
+
+display no of employee in each dept 
+ select count(*) no_of_emp , deptno  from emp group by deptno
+
+Q display no of employee in each dept  only if there are atleast 4 employee 
+
+select count(*) no_of_emp , deptno  from emp group by deptno having count(*) >4;
+
+
+Q display no of employee in each dept having atleast 2 emp in it, as there name consist of char'A' or char  'S'?
+		select count(*) no_of_emp, deptno from emp where ename like '%A%' or ename like '%S%' group by deptno having count(*)>=2;
+Q display the salary which are repeated in emp table?
+	 	select count(sal) sal from emp where sal>1 group by sal;
+Q displaye job and total salary of each job , if the total salary of each job is more than 9500;
+	      	select sum(sal), job  from emp group by job having sum(sal)>9500;
+Q calcukate the avg salary of all employees and displaye it only if the average exceeds 55000;
+		select avg(sal) , sal from emp group by sal having avg(sal)>55000;
+
+
+
+
+ Q  WAQTD number of emp earning sal more than 1200 in each job  and the total sal needed to pay emp 
+
+
+
+-----------------------------------------------------------------------------------------------------------------------
+
+ 1) it is used to arrange the records in ascending or descending order in the result table 
+
+select group_function/group_by_exp
+from table 
+where <filter_condition>
+group by col_name/exp
+having <group_filter_condition>
+order by < col_name asc/desc ;
+
+
+Order of execution 
+-------------
+
+from clause 
+where clause [row-by-row]
+group by clause(row by row) 
+having [group-by-clause]
+select clause [group-by -group]
+order by [row-by-row]
+
+
+arrange all name of em in desc order ??
+
+select ename from emp order by ename desc ; 
+
+
+display all sal of employee working as manager 
+
+select sal from emp where job ='MANAGER" order by sal asc;
+
+Q imp display no of times salaries are repeated ? 
+		arrange them in descending order ?
+
+select count(sal) as repeated , sal from emp group by sal order by sal desc ;
+
+
+
+
+Q - displaye the details of employee earning salary more than allen 
+
+Q waq to display deptname of smith 
+
+
+ select from dept where deptno =(select deptno from emp where ename = 'SMITH');
+
+
+
+
+
+waqto display dept name in which there are atleast 4 emp working ;
+
+
+DISPLAY The details of employee getting same salary in same dept 
+
+select * from emp where(sal,deptno) in (select sal,deptno from emp group by sal,deptno having count(sal)>1);
+
+
+
+LIMIT --
+
+display first record 
+
+selet * from emp limit 1 ;
+
+10 record 
+
+select * from emp limit 10 ;
+
+display 5 6 7 record 
+	
+
+display 4th max salary 
+
+display detail of employee who is earning 3 and 4 th min sala 
+
+
+display enbame , annual salary of employye who's annual salary is more than 12k ;
+
+
+select ename,sal*12 as annual_sal
+
+from (select emp.*,sal*12 as annual_sal from emp ) t1 where anuual_Sal>12000
+	 
+
+select ename,sal*12 as anuual_sal
+from emp where annual_sal>12000;

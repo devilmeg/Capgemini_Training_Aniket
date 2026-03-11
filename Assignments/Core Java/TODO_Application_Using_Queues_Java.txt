@@ -1,0 +1,88 @@
+TODO Application Using Queues in Java
+
+Problem Statement:
+Design andf implement a console-based TODO application in Java that manages tasks using Queue data structures.
+Each task should include details such as task ID, description, priority, and status.
+
+Tasks should be processed primarily using FIFO (First-In-First-Out) principles, with enhancements to handle
+priority, scheduling, and advanced task management features.
+The application should demonstrate effective usage of Java Queues, object-oriented principles,
+and scalable task management.
+
+Sub Work Items:
+
+1. Basic Task Creation
+Create a Task class with attributes such as id, description, priority, status, and createdTime.
+
+2. Simple Queue Implementation
+Use a Queue<Task> (LinkedList) to add and remove tasks following FIFO order.
+
+3. View Pending Tasks
+Implement functionality to display all tasks currently present in the queue without removing them.
+
+4. Task Completion
+Dequeue tasks when they are marked as completed and maintain a separate list or queue for completed tasks.
+
+5. Priority-Based TODO Queue
+Introduce task priority and manage tasks using a PriorityQueue, where higher-priority tasks are processed first.
+
+6. Multiple Queues for Task Status
+Maintain separate queues for pending, in-progress, and completed tasks.
+Move tasks between queues based on their current status.
+
+7. Delayed Task Processing
+Implement delayed execution of tasks using DelayQueue for tasks scheduled for future execution.
+
+8. Persistent Task Storage
+Serialize and deserialize task queues to ensure tasks persist across application restarts.
+
+9. Queue State Visualization
+Provide a formatted console view showing:
+- Current queue state
+- Task lifecycle flow
+- Summary counts per task status
+
+10. Audit Trail and History Log
+Maintain a history of:
+- Task creation
+- Status changes
+- Priority updates
+Use an event-based queue for auditing purposes.
+
+11. Task Reordering Rules
+Allow controlled reordering such as:
+- Moving a task to the front if marked as urgent
+- Rotating the queue after every N tasks are processed
+
+12. Queue Capacity Management
+Limit the maximum size of the TODO queue.
+If the queue is full:
+- Reject new tasks, or
+- Move low-priority tasks to a backlog queue
+
+13. Input Validation and Error Handling
+Add robust validation for:
+- Duplicate task IDs
+- Empty task descriptions
+- Invalid priority values
+Gracefully handle invalid operations without crashing the application.
+
+14. Task Search and Filtering
+Enable searching tasks by:
+- Task ID
+- Keyword in description
+- Priority or status
+Ensure searching does not disturb the original queue order.
+
+15. Task Dependency Management
+Allow tasks to depend on other tasks.
+A task should be moved to the pending queue only after all its dependent tasks are completed.
+
+16. Undo and Redo Task Operations
+Implement Undo and Redo functionality for task add, remove, and completion operations using:
+- Queue and Stack combination
+- Command history tracking
+
+17. Task Aging and Priority Escalation
+Track how long a task stays in the queue.
+If a task exceeds a defined waiting time, automatically escalate its priority.

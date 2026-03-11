@@ -1,0 +1,278 @@
+Scenario 1: User Login Activity Tracker 
+Problem Statement
+
+Track user login activities:
+LOGIN, LOGOUT, FAILED_LOGIN
+
+Activities are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+trackActivity(ActivityType type)
+
+getUnpersistedCount()
+
+getTotalActivityCount()
+
+getMostFrequentActivities()
+
+
+
+Scenario 2: File Operation Logger 
+Problem Statement
+
+Track file operations:
+CREATE, READ, UPDATE, DELETE
+
+Operations are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+logOperation(FileOperation operation)
+
+getUnpersistedCount()
+
+getTotalOperationCount()
+
+getMostUsedOperations()
+
+
+
+Scenario 3: Payment Event Monitor 
+Problem Statement
+
+Track payment events:
+INITIATED, SUCCESS, FAILED, REFUNDED
+
+Events are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+recordEvent(PaymentEvent event)
+
+getUnpersistedCount()
+
+getTotalEventCount()
+
+getMostFrequentEvents()
+
+
+
+Scenario 4: Notification Dispatch Tracker 
+Problem Statement
+
+Track notification types:
+EMAIL, SMS, PUSH, WHATSAPP
+
+Notifications are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+dispatch(NotificationType type)
+
+getUnsentCount()
+
+getTotalNotificationCount()
+
+getMostUsedNotificationTypes()
+
+
+
+Scenario 5: Inventory Change Tracker
+Problem Statement
+
+Track inventory changes:
+ADD, REMOVE, ADJUST
+
+Changes are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+recordChange(InventoryAction action)
+
+getUnpersistedCount()
+
+getTotalChangeCount()
+
+getMostFrequentActions()
+
+
+
+Scenario 6: Search Query Analytics 
+
+Problem Statement
+
+Track search queries:
+PRODUCT_SEARCH, CATEGORY_SEARCH, BRAND_SEARCH
+
+Queries are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+trackSearch(SearchType type)
+
+getUnpersistedCount()
+
+getTotalSearchCount()
+
+getMostUsedSearchTypes()
+
+
+
+Scenario 7: API Request Tracker
+Problem Statement
+
+Track API requests:
+GET, POST, PUT, DELETE
+
+Requests are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+trackRequest(HttpMethod method)
+
+getUnpersistedCount()
+
+getTotalRequestCount()
+
+getMostUsedMethods()
+
+
+
+Scenario 8: Order Lifecycle Tracker
+Problem Statement
+
+Track order states:
+CREATED, CONFIRMED, SHIPPED, DELIVERED, CANCELLED
+
+States are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+trackOrderState(OrderStatus status)
+
+getUnpersistedCount()
+
+getTotalOrderCount()
+
+getMostFrequentStates()
+
+
+
+Scenario 9: Feature Usage Monitor
+Problem Statement
+
+Track feature usage:
+SEARCH, FILTER, SORT, EXPORT
+
+Usages are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+trackUsage(Feature feature)
+
+getUnpersistedCount()
+
+getTotalUsageCount()
+
+getMostUsedFeatures()
+
+
+
+Scenario 10: System Error Logger
+Problem Statement
+
+Track system errors:
+VALIDATION_ERROR, AUTH_ERROR, SERVER_ERROR, TIMEOUT_ERROR
+
+Errors are batched before persistence.
+
+Maintain:
+
+FIFO order
+
+frequency statistics
+
+total count
+
+Required:
+
+logError(ErrorType type)
+
+getUnpersistedCount()
+
+getTotalErrorCount()
+
+getMostFrequentErrors()

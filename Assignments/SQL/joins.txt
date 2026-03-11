@@ -1,0 +1,202 @@
+joining of multiple table is known as joins 
+
+
+Why/ when we use join ?
+
+-- whenever data to be selected or displayed from multiple tables simultaneously we use it 
+
+
+Types 
+1) cartesian joins/cross joins 
+2)inner joins/equi joins 
+3 outer joins 
+	-left outer joins
+	-right outer joins 
+	-full outer join 
+4) Natural join 
+5)self join 
+
+-------------------------------------------------------------------------------------------------------------
+
+1 )cartesian joins/cross joins 
+-------------------------------
+1.1)in cartesian join each record from table 1 will be merged with all the records of table 2
+
+	Syntax -  
+1-	Ansi ( American national standard institute )
+
+	select col_name from 
+	tbn1 cross join tnb2;
+
+oracle 
+	select col_name from tn1,tn2;
+
+
+eg = select * from emp cross join dept;
+
+oracle 
+	select * from 
+
+
+----------------------------------------------------------
+
+Inner join 
+
+.1)in returns matched records 
+	Syntax -  
+1-	Ansi ( American national standard institute )
+
+	select col_name from 
+	tbn1 inner join  tnb2
+	on <join_condition>;
+
+oracle 
+	select col_name 
+	from tn1,tn2
+	where <join_condition>;
+----------------------------
+join condition 
+---------------
+it is a condition where two tables are merged 
+
+	SYNTAX :
+		Tn1.Col_name = Tn2.col_name;
+	example :
+		Emp.Deptno = Dept.Deptno;
+
+Q display ename and there department name where they work ?
+
+	select Ename,Dname
+	from Emp,Dept 
+	where Emp.Deptno=Dept.Deptno;
+
+
+Q Display employee name, salary and location of all the employee who are working in the chichago
+
+	select ename,sal,loc 
+	from emp,dept
+	where emp.Deptno=Dept.Deptno
+	and loc ='CHICAGO';
+
+ansi syntax 
+	select ename,sal,loc 
+	from inner join dept 
+	 on emp.Deptno=Dept.Deptno
+	 where loc ='CHICAGO';
+
+
+ watd Dname and job for all the employee 
+ Q1). WADTD DNAME AND JOB FOR ALL THE EMPLOYEES WHOS JOB AND DNAME STARTS WITH CHARACTER 'S'
+	1)select Dname,job from emp,dept where emp.depno=dept.deptno and dname like 'S%' and job like'S%';
+
+ Q2). WAQTD DNAME AND MGRNO FOR EMPLOYEES REPORTING TO 7839
+	select Dname,Mgr from emp,dept where emp.depno=dept.deptno and  mgr=7839
+
+ Q3)WAQTD DNAME AND HIREDATE FOR EMPLOYEES HIRED AFTER 83 INTO ACCOUNTING OR RESEARCH DEPT
+	select Dname,Hiredate from emp,dept where emp.depno=dept.deptno where Hiredate>'31-12-1983' and Dname='ACCOUNTING'or Dname='RESEARCH';
+
+ Q4)WAQTD ENAME AND DNAME OF THE EMPLOYEES WHO ARE GETTING COMM IN DEPT 10 OR 30	
+	select Ename,Dname from emp,dept where emp.depno=dept.deptno and deptno=10 or deptno=30 and comm is not null;
+
+ Q5) WAQTD DNAME AND EMPNO FOR ALL THE EMPLOYEES WHO'S EMPNO ARE (7839,7902) AND ARE WORKING IN LOC NEW YORK.
+	
+
+Q Display no of employee working in each dept ?
+	select count(*) no_of_employees,emp.deptno,Dname 
+	from emp,dept
+	where emp.deptno=dept.deptno
+	group by emp.deptno,Dname,loc;
+ 
+
+
+ 
+
+	select (*) no_of_employees 
+	from emp 
+	group by deptno;
+
+
+Q display name in which at least 4 employee are working
+
+
+--------------------------------------------------------------------------------------------------------------------------
+OUter join 
+---------------
+	LEFT OUTER JOIN 
+
+1) it gives matched record from both the table and unmatched record of left table 
+
+	Syntax : 
+	
+	Ansi : 
+
+		Select COl_name
+		from Tn1 left join Tn2 
+		on Tn1.Col_name=Tn2.colname;
+
+	oracle :
+		Select COl_name
+		from Tn1 Tn2 
+		where  Tn1.Col_name=Tn2.colname(+);
+
+Q 1) Display employee name and  their department name even though the employee  who don't work in any dept ; 
+	select * from 
+	emp,Dept
+	where emp.deptno=dept.deptno(+);
+
+
+select * from Dept,emp where dept.deptno(+)=emp.deptno;
+
+-------------------------------------------------------------------------------
+	RIGHT OUTER JOIN 
+
+1) it gives matched record from both the table and unmatched record of right table 
+
+	Syntax : 
+	
+	Ansi : 
+
+		Select COl_name
+		from Tn1 right join Tn2 
+		on Tn1.Col_name=Tn2.colname;
+
+	oracle :
+		Select COl_name
+		from Tn1 Tn2 
+		where  Tn1.Col_name(+)=Tn2.colname;
+
+Q 1) WQTD EMPLOYEE NAME AND THEIR DEPT NAME even though the dept where no employye are working
+	select ename Dname from 
+	emp,Dept
+	where emp.deptno=dept.deptno(+);
+
+select ename, Dname from emp,Dept where emp.deptno(+)=dept.deptno;
+
+select ename, Dname from Dept,emp where dept.deptno=emp.deptno(+);
+
+-------------------------------------------------------------------------------
+	FUll OUTER JOIN 
+
+1) it gives matched record from both the table and unmatched record of both left and right table 
+
+	Syntax : 
+	
+	Ansi : 
+
+		Select COl_name
+		from Tn1 full join Tn2 
+		on Tn1.Col_name=Tn2.colname;
+
+	oracle :
+		Select COl_name
+		from Tn1 Tn2 
+		where  Tn1.Col_name(+)=Tn2.colname;
+
+
+
+
+
+
+select * from Dept,emp where dept.deptno(+)=emp.deptno;
+
+ 

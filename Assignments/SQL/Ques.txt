@@ -1,0 +1,142 @@
+Authors ( author_id, author_name , state )
+Genres(Genre_id,Genre_name) 
+Books ( book_id , title , author_id , genre_id )
+Loans ( loan_id , user_id , book_id , borrowed_Date, return_Date ) 
+Users ( user_id , user_name , phoneno , email )
+
+ display author_name  who has wriiteten a book called as ‘SQL’
+select author_name from authors where author_id in (select author_id from books where title =sql)
+
+2 display no of books written by each author 
+
+
+select count(author_id) no_of_times from books group by author id
+
+
+Q diplsy user details who has borrowed a book atomic habbits 
+
+   select * from users where user_id in ( select user_id from loans where book_id in (select book_id from books where title ='atomic habbit'));
+
+Q display number of books borrowd by user 
+
+select count(user_id),user_id from lonas  group by  user_id
+
+Q Display author name and their book name
+	select author_name,title
+	from authors,book
+ 	where authors.author_id=book.author_id;
+Q display author who has not written any book 
+
+	select author_name
+	from authors,book
+ 	where authors.author_id=book.author_id(+)
+	and book_id is null;
+
+	select * from authors 
+	where author_id not in 
+	(select 
+
+Display books name and the books genre name 
+
+select title , genre_name from books b inner join genres g on b.genre_id=g.genre_id;
+
+
+Q Write a query to display number of books borrowed by each user with username 
+
+select  user_name,count(user_id) no_of_times_borrowed  from  loans,users  where loans.user_id=user.user_id group by user_id ; 
+
+ select  user_name,loans.user_id,count(loans.user_id) no_of_times_borrowed  from  loans,users  where loans.user_id=users.user_id group by user_nameloans.user_id ;
+
+
+Q waq to retrieve the title of the book and the author name from the books and authors table 
+
+select title,author_name,authors.author_id from books,authors  where authors.author_id=books.author_id;
+
+Q Waq to find all users details who have borrowed the book with title"1984"
+
+	ansi 
+		
+		SELECT U.*
+		FROM Users U INNER JOIN LOANS L
+		on U.user_id=L.user_id
+		inner join  books bo
+		on L.BOOKS _ID =BO.BOOKS_ID
+		WHERE BO.TITLE="1984" 
+
+q USER DETAILS WHO HAS BORRWOED MAX NUMBER OF BOOKS 
+
+SELECT u.*,max(l.user_id) from loans l inner join users u on l._userid = u.user_id group by l.user_id;
+
+Q waq to show the most borrowed books details title 
+
+
+select count(*),title,l.book_IDfrom loans l inner join books b  
+on l.book_id=b.book_id  
+group by title, l.book_id 
+ having max(l.book_id) in ( SELECT MAX()
+			
+
+
+--------------------------------------------------------------------------------------------------------------------------
+
+NATURAL JOIN 
+---------------
+
+SYNTAX : 
+		select col_name
+		from tn1 natural join tn2;
+
+
+Self join 
+	 	
+	Ansi : 
+		select col_name 
+		from tn1 join tn2
+		on <join condition>;
+
+	oracle : 
+
+		select col_name
+		from tn1,tn2
+		where <join_condition>
+		
+	
+
+
+
+
+select e1.name ename ,e2.name mname from emp e1 join emp e2 on e1.mgr=e2.empno;
+
+
+select * from emp e1 join emp e2 on e1.mgr=e2.empno;
+
+
+Q display ename , manager , name with there salary if manager is earning more than employee ??
+
+	
+select e1.name ename ,e1.sal esal ,e2.name mname, e2.sal msal from emp e1 join emp e2 on e1.mgr=e2.empno where e2.sal>e1.sal;
+
+
+Q displaye employee name , manager name and manager's manager name ?
+
+select e1.ename ename,e2.ename mname, e3.ename mmname from emp e1 join emp e2 on e1.mgr=e2.empno join emp e3 on e2.mgr=e3.empno;
+
+
+
+
+
+Set operator 
+
+
+set operator are used to combine the result of two select statement . two queries 
+
+
+4 types 
+
+union - it returns only unique values from both the queries 
+
+union all - it returns all the values from both the queries 
+
+intersect - it returns common values from both the table 
+
+minus - it returns values from table 1 which is not present in table2 ; 

@@ -1,0 +1,46 @@
+1) Core Java – Scenario Based
+
+Scenario:
+You are working on a payment processing system where multiple threads are updating the same customer wallet balance.
+
+Problem Statement:
+- Multiple threads can credit and debit money simultaneously.
+- Balance should never go negative.
+- Reads should be fast, but writes must be thread-safe.
+- You are NOT allowed to use database locks.
+
+Tasks:
+- Design a Wallet class.
+- Ensure thread safety for concurrent debit/credit operations.
+- Prevent race conditions and inconsistent balance.
+- Explain which Java concurrency mechanisms you would use and why.
+
+Follow-up :
+- How would your solution change if 1000+ read operations and very few writes happen per second?
+
+
+2) DSA – Scenario Based 
+Scenario:
+You are building a log processing system for a server.
+
+Each log entry is a string:
+"LEVEL:MESSAGE"
+Example: "ERROR:DiskFull"
+
+Rules:
+- Logs arrive in real time and must be processed in FIFO order.
+- If the log level is ERROR, it must be re-processed immediately after the current log.
+- If the same ERROR message appears 3 times consecutively, stop processing and raise an alert.
+- You must preserve original order as much as possible.
+
+Constraints:
+- Use only Queue, Stack, and String operations.
+- No additional data structures like Map or Set.
+
+Tasks:
+- Design the algorithm.
+- Explain which data structure is used at each step.
+- Analyze time and space complexity.
+
+Follow-up :
+- How would you modify the solution if logs arrive from multiple producers?
