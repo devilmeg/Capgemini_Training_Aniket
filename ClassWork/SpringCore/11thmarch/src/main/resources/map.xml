@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+    <bean id="javaService" class="factory_registry_pattern.bookservice.JavaBookService"/>
+    <bean id="springService" class="factory_registry_pattern.bookservice.SpringBookService"/>
+    <bean id="pythonService" class="factory_registry_pattern.bookservice.PythonBookService"/>
+
+
+<!--   Factory beans <>-->
+    <bean id="bookFactory" class="factory_registry_pattern.factory.BookFactory">
+        <property name="services">
+            <map>
+                <entry key="java" value-ref="javaService"/>
+                <entry key="spring" value-ref="springService"/>
+                <entry key="python" value-ref="pythonService"/>
+
+            </map>
+
+        </property>
+    </bean>
+</beans>
