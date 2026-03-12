@@ -1,0 +1,21 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Database bean -->
+    <bean id="dbService"
+          class="init_cycle.dbservice.DataBaseService"
+          init-method="init"
+          destroy-method="destroy"/>
+
+    <!-- DAO bean -->
+    <bean id="studentDao"
+          class="init_cycle.dao.StudentDao">
+
+        <property name="databaseService" ref="dbService"/>
+
+    </bean>
+
+</beans>
