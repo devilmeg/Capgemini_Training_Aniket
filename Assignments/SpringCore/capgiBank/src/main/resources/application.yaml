@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: capgiBank
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/Account
+    username: postgres
+    password: Aniket620@
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 8080
